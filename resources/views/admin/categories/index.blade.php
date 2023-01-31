@@ -48,7 +48,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  Sei sicuro di voler eliminare la categoria "{{$category->title}}"
+                  Sei sicuro di voler eliminare la categoria "{{$category->name}}"
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
