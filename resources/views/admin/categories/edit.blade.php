@@ -17,7 +17,7 @@
             @method('PUT')
             <div class="mb-3">
                 <label for="name" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Inserisci il nome della categoria" value="{{old($category->name)}}">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Inserisci il nome della categoria" value="{{$category->name, old($category->name)}}">
             </div>
             <button type="submit" class="btn btn-success">Conferma</button>
         </form>
