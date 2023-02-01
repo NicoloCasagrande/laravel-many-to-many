@@ -24,7 +24,17 @@
               </div>
               <div class="mb-3">
                 <label for="cover_image" class="form-label">Immagine</label>
-                <input type="file" class="form-control" id="cover_image" name="cover_image" value="{{old('cover_image')}}">
+                <img class="w-25" id="output">
+                <script>
+                  var loadFile = function(event) {
+                    var output = document.getElementById('output');
+                    output.src = URL.createObjectURL(event.target.files[0]);
+                    output.onload = function() {
+                      URL.revokeObjectURL(output.src) // free memory
+                    }
+                  };
+                </script>
+                <input type="file" class="form-control" id="cover_image" name="cover_image" value="{{old('cover_image')}}" onchange="loadFile(event)">          
               </div>
                 <div class="mb-3">
                   <label for="category_id" class="form-label">Categoria</label>
