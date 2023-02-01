@@ -28,6 +28,7 @@ class UpdatePostRequest extends FormRequest
             'title' => ['required', Rule::unique('posts')->ignore($this->post),'string','max:150'],
             'content' => 'required|string', 
             'cover_image' => 'nullable|image|max:2048',
+            'no_image' => 'nullable',
             'category_id' => 'nullable|exists:categories,id', 
             'tags' => 'nullable|exists:tags,id'
         ];

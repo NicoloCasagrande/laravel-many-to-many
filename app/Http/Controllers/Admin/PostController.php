@@ -100,8 +100,21 @@ class PostController extends Controller
         $old_title = $post->title;
 
         $data = $request->validated();
-        // $post->category = $data['category'];
+
         $post->slug = Str::slug($data['title']);
+
+        if ( isset($data['cover_image']) ) {
+            if( $post->cover_image ) {
+                Storage::delete($post->cover_image);
+            }
+            $data['cover_image'] = Storage::put('uploads', $data['cover_image']);
+        }
+
+        if( isset($data['no_image']) && $post->cover_image  ) {
+            Storage::disk('public')->delete($post->cover_image);
+            $post->cover_image = null;
+        }
+
         $post->update($data);
 
         if(isset($data['tags'])){
@@ -109,18 +122,6 @@ class PostController extends Controller
         }else{
             $post->tags()->sync([]);
         }
-
-        // if ( isset($data['cover_image']) ) {
-        //     if( $post->cover_image ) {
-        //         Storage::delete($post->cover_image);
-        //     }
-        //     $data['cover_image'] = Storage::put('uploads', $data['cover_image']);
-        // }
-
-        // if( isset($data['no_image']) && $post->cover_image  ) {
-        //     Storage::delete($post->cover_image);
-        //     $post->cover_image = null;
-        // }
 
         return redirect()->route('admin.posts.index')->with('message', "Il post $old_title è stato aggiornato");
     }
@@ -134,6 +135,11 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $old_title = $post->title;
+
+        if($post->cover_image){
+            Storage::disk('public')->delete($post->cover_image);
+        }
+
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('message', "Il post $old_title è stato cancellato");
