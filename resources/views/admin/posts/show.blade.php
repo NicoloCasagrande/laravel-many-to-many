@@ -5,7 +5,13 @@
     {{-- Con il punto interrogativo prima del nome della proprietà si intende 'se esiste stampa se no non farlo' --}}
     <a href="{{route('admin.categories.show', $post->category)}}"><h3>{{$post->category?->name ?: 'Nessuna Categoria'}}</h3></a>
     <p>{{$post->content}}</p>
-    
+    <div class="mt-3">
+        <div>
+            @if($post->cover_image)
+                <img class="w-25" src="{{asset("storage/$post->cover_image")}}" alt="">
+            @endif
+        </div>
+    </div>
     @if($post->tags)
         <div class="mb-3">
             @foreach($post->tags as $tag)

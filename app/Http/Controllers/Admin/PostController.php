@@ -46,9 +46,11 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $data = $request->validated();
+
         $new_post = new Post();
         $new_post->fill($data);
         $new_post->slug = Str::slug($new_post->title);
+        $new_post->cover_image = Storage::disk('public')->put('uploads', $data['cover_image']);
         $new_post->save();
 
         if(isset($data['tags'])){
